@@ -1,0 +1,168 @@
+
+<!-- Horizontal Form -->
+<div class="box box-info">
+  <div class="box-header with-border" *ngIf="roleId==-1">
+    <h3 class="box-title" >新增角色</h3>
+  </div>
+  <div class="box-header with-border" *ngIf="roleId!=-1">
+    <h3 class="box-title" >修改角色</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal">
+    <!--新增-->
+    <nz-row nzType="flex" nzJustify="center" *ngIf="roleId==-1">
+      <div nz-col nzSpan="12">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+          <span>
+            角色名称
+            <nz-tooltip nzTitle="角色统称">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="name" formControlName="name" [(ngModel)]="name" name="name">
+              <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名称!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="createdby" nzRequired>
+          <span>
+            创建人
+            <nz-tooltip nzTitle="第一个创建该角色者的名称">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="createdby" formControlName="createdby" [(ngModel)]="createdby" name="createdby">
+              <nz-form-explain *ngIf="validateForm.get('createdby').dirty && validateForm.get('createdby').errors">请输入创建人!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="createdtime" nzRequired>创建时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker id="createdtime" formControlName="createdtime" [(ngModel)]="createdtime" name="createdtime"
+                              [nzMode]="dateMode"
+                              nzShowTime
+                              (nzOnOpenChange)="handleDateOpenChange($event)"
+                              (nzOnPanelChange)="handleDatePanelChange($event)"
+                              >
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzRequired>备注</nz-form-label>
+            <nz-form-control [nzSpan]="12" >
+              <textarea [(ngModel)]="desc" name="desc" formControlName="comment" nz-input rows="2" placeholder="角色描述"></textarea>
+              <nz-form-explain *ngIf="validateForm.get('comment').dirty&&validateForm.get('comment').hasError('required')">请输入角色描述!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="permission" nzRequired>权限设置</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-tree  id="nodes" formControlName="nodes" name="nodes"
+                #nzTree
+                [(ngModel)]="nodes"
+                [nzCheckable]="true"
+                [nzMultiple]="true"
+                [nzDefaultExpandedKeys]="expandKeys"
+                [nzDefaultCheckedKeys]="checkedKeys"
+                [nzDefaultSelectedKeys]="selectedKeys"
+                [nzDefaultExpandAll]="expandDefault"
+                (nzClick)="mouseAction('click',$event)"
+                (nzCheckBoxChange)="mouseAction('check',$event)"
+                (nzDblClick)="mouseAction('dblclick', $event)"
+              >
+              </nz-tree>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </nz-row>
+
+<!--编辑-->
+    <nz-row nzType="flex" nzJustify="center" *ngIf="roleId!=-1">
+      <div nz-col nzSpan="12">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+          <span>
+            角色名称
+            <nz-tooltip nzTitle="角色统称">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="name" formControlName="name" [(ngModel)]="name" name="name" value={{name}}>
+              <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入角色名称!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="modifyby" nzRequired>
+          <span>
+            修改人
+            <nz-tooltip nzTitle="修改该角色者的名称">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="modifyby" formControlName="modifyby" [(ngModel)]="modifyby" name="modifyby" value={{modifyby}}>
+              <nz-form-explain *ngIf="validateForm.get('modifyby').dirty && validateForm.get('modifyby').errors">请输入修改人!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="modifytime" nzRequired>修改时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker id="modifytime" formControlName="modifytime" [(ngModel)]="modifytime" name="modifytime"
+                              [nzMode]="dateMode"
+                              nzShowTime
+                              (nzOnOpenChange)="handleDateOpenChange($event)"
+                              (nzOnPanelChange)="handleDatePanelChange($event)">
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzRequired>备注</nz-form-label>
+            <nz-form-control [nzSpan]="12" >
+              <textarea [(ngModel)]="desc" name="desc" formControlName="comment" nz-input rows="2" placeholder="write any thing" value={{desc}}></textarea>
+              <nz-form-explain *ngIf="validateForm.get('comment').dirty&&validateForm.get('comment').hasError('required')">Please write something here!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="permission" nzRequired>权限设置</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-tree  id="nodes" formControlName="nodes" name="nodes"
+                        #nzTree
+                        [(ngModel)]="nodes"
+                        [nzCheckable]="true"
+                        [nzMultiple]="true"
+                        [nzDefaultExpandedKeys]="expandKeys"
+                        [nzDefaultCheckedKeys]="checkedKeys"
+                        [nzDefaultSelectedKeys]="selectedKeys"
+                        [nzDefaultExpandAll]="expandDefault"
+                        (nzClick)="mouseAction('click',$event)"
+                        (nzCheckBoxChange)="mouseAction('check',$event)"
+                        (nzDblClick)="mouseAction('dblclick', $event)"
+              >
+              </nz-tree>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </nz-row>
+    <div class="box-footer">
+      <a routerLink="/test/role"><button type="submit" class="btn btn-default">取消</button></a>
+      <a routerLink="/test/role"> <button type="submit" class="btn btn-info pull-right" (click)="save()">保存</button></a>
+    </div>
+    <!-- /.box-footer -->
+  </form>
+</div>
+
+
+

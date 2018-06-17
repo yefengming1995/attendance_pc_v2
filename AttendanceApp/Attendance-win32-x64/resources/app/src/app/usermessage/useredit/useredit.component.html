@@ -1,0 +1,51 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">用户信息</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">用户名</label>
+
+        <div class="col-sm-4">
+          <input [(ngModel)]="username" name="username" type="text" class="form-control" id="username" >
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="login" class="col-sm-2 control-label">注册时间</label>
+
+        <div class="col-sm-6">
+          <input [(ngModel)]="logintime" name="logintime" type="text" class="form-control" id="login" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="before" class="col-sm-2 control-label">上次登录时间</label>
+
+        <div class="col-sm-6">
+          <input [(ngModel)]="beforetime" name="beforetime"  type="text" class="form-control" id="before"  value={{user.beforetime}}>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role" class="col-sm-2 control-label">角色</label>
+
+        <div class="col-sm-6">
+          <input [(ngModel)]="role" name="role" type="text" class="form-control" id="role"  value={{user.role}}>
+        </div>
+      </div>
+
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default" (click)="cancel()">取消</button>
+        <button type="submit" class="btn btn-info pull-right" (click)="save()">保存</button>
+      </div>
+      <!-- /.box-footer -->
+    </div>
+  </form>
+</div>

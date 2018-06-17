@@ -1,0 +1,26 @@
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">参数设置</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="meter" class="col-sm-2 control-label">签到范围</label>
+
+        <div class="col-sm-4">
+          <input [(ngModel)]="meter" name="meter" type="text" class="form-control" id="meter" value={{meter}}>(单位：米)
+        </div>
+      </div>
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <a><button type="submit" class="btn btn-default" >取消</button></a>
+      <a><button type="submit" class="btn btn-info pull-right" >保存</button></a>
+    </div>
+    <!-- /.box-footer -->
+  </form>
+</div>
+

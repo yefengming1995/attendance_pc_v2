@@ -1,0 +1,118 @@
+
+<!-- Horizontal Form -->
+<div class="box box-info">
+  <div class="box-header with-border" >
+    <h3 class="box-title" >新增授课安排</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal">
+    <!--新增-->
+    <nz-row nzType="flex" nzJustify="center" >
+      <div nz-col nzSpan="12">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+          <span>
+            课程名称
+            <nz-tooltip nzTitle="课程统称">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="name" formControlName="name" [(ngModel)]="name" name="name">
+              <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">请输入课程名称!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="teacher" nzRequired>
+          <span>
+            授课教师
+            <nz-tooltip nzTitle="授课教师的名字">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="teacher" formControlName="teacher" [(ngModel)]="teacher" name="teacher">
+              <nz-form-explain *ngIf="validateForm.get('teacher').dirty && validateForm.get('teacher').errors">请输入教师名称!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>周数类型</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzHasFeedback>
+              <nz-radio-group [(ngModel)]="radioValue" name="radioValue" id="radioValue" formControlName="radioValue">
+                <label nz-radio nzValue="单周">单周</label>
+                <label nz-radio nzValue="双周">双周</label>
+                <label nz-radio nzValue="全周">全周</label>
+                <label nz-radio nzValue="待定">待定</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>授课星期</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzHasFeedback>
+              <nz-select [nzMaxMultipleCount]="5" style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" [(ngModel)]="listOfSelectedValue"
+                         name="listOfSelectedValue" id="listOfSelectedValue" formControlName="listOfSelectedValue">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>周数范围</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzHasFeedback>
+              第<nz-input-number [(ngModel)]="demoValue1" name="demoValue1" id="demoValue1" formControlName="demoValue1" [nzMin]="1" [nzMax]="20" [nzStep]="1"></nz-input-number>周至
+              第<nz-input-number [(ngModel)]="demoValue2" name="demoValue2" id="demoValue2" formControlName="demoValue2" [nzMin]="1" [nzMax]="20" [nzStep]="1"></nz-input-number>周
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>节数范围</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzHasFeedback>
+              第<nz-input-number [(ngModel)]="demoValue3" name="demoValue3" id="demoValue3" formControlName="demoValue3" [nzMin]="1" [nzMax]="11" [nzStep]="1"></nz-input-number>节至
+              第<nz-input-number [(ngModel)]="demoValue4" name="demoValue4" id="demoValue4" formControlName="demoValue4" [nzMin]="1" [nzMax]="11" [nzStep]="1"></nz-input-number>节
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="classroom" nzRequired>
+          <span>
+            授课教室
+            <nz-tooltip nzTitle="授课教室的名字">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="classroom" formControlName="classroom" [(ngModel)]="classroom" name="classroom">
+              <nz-form-explain *ngIf="validateForm.get('classroom').dirty && validateForm.get('classroom').errors">请输入教室名称!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="students" nzRequired>
+          <span>
+            授课对象
+            <nz-tooltip nzTitle="授课班级的名字">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="students" formControlName="students" [(ngModel)]="students" name="students">
+              <nz-form-explain *ngIf="validateForm.get('students').dirty && validateForm.get('students').errors">请输入授课学生班级!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+        </form>
+      </div>
+    </nz-row>
+    <div class="box-footer">
+      <a routerLink="/test/teachingarrange"><button type="submit" class="btn btn-default">取消</button></a>
+      <a routerLink="/test/teachingarrange"> <button type="submit" class="btn btn-info pull-right" (click)="save()">保存</button></a>
+    </div>
+
+    <!--编辑-->
+  </form>
+</div>
+
+
+

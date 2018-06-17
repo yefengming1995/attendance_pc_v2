@@ -1,0 +1,65 @@
+<button nz-button (click)="addRow()" class="editable-add-btn">Add</button>
+<!--<nz-table #editRowTable nzBordered [nzData]="dataSet">-->
+<nz-table #a nzBordered [nzData]="displayData">
+ <thead (nzSortChange)="sort($event)" nzSingleSort>
+  <tr>
+    <th nzShowCheckbox nzShowRowSelection [nzSelections]="listOfSelection" [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+    <th nzWidth="25%" nzShowSort nzSortKey="name" nzShowFilter [nzFilters]="nameList" (nzFilterChange)="filter($event,searchAddress)">Name</th>
+    <th nzWidth="15%" nzShowSort nzSortKey="age">Age</th>
+    <th nzWidth="30%" nzShowSort nzSortKey="address" nzShowFilter [nzFilterMultiple]="false" [nzFilters]="addressList" (nzFilterChange)="filter(listOfSearchName,$event)">Address</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of a.data">
+    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus($event)"></td>
+    <td>
+      <div class="editable-cell">
+        <div class="editable-cell-text-wrapper">
+          <ng-container *ngIf="!editCache[data.key].edit">
+            {{data.name}}
+          </ng-container>
+          <ng-container *ngIf="editCache[data.key].edit">
+            <input type="text" nz-input [(ngModel)]="editCache[data.key].data.name">
+          </ng-container>
+        </div>
+      </div>
+    </td>
+    <td>
+      <ng-container *ngIf="!editCache[data.key].edit">
+        {{data.age}}
+      </ng-container>
+      <ng-container *ngIf="editCache[data.key].edit">
+        <input type="text" nz-input [(ngModel)]="editCache[data.key].data.age">
+      </ng-container>
+    </td>
+    <td>
+      <ng-container *ngIf="!editCache[data.key].edit">
+        {{data.address}}
+      </ng-container>
+      <ng-container *ngIf="editCache[data.key].edit">
+        <input type="text" nz-input [(ngModel)]="editCache[data.key].data.address">
+      </ng-container>
+    </td>
+    <td>
+      <div class="editable-row-operations">
+        <ng-container *ngIf="!editCache[data.key].edit">
+          <a (click)="startEdit(data.key)">Edit</a>
+        </ng-container>
+        <ng-container *ngIf="editCache[data.key].edit">
+          <a (click)="saveEdit(data.key)">Save</a>
+          <nz-popconfirm [nzTitle]="'Sure to cancel?'" (nzOnConfirm)="cancelEdit(data.key)">
+            <a nz-popconfirm>Cancel</a>
+          </nz-popconfirm>
+        </ng-container>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteRow(data.key)">
+          <a nz-popconfirm>Delete</a>
+        </nz-popconfirm>
+      </div>
+
+    </td>
+  </tr>
+
+  </tbody>
+</nz-table>
